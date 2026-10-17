@@ -1,0 +1,100 @@
+
+
+/* =========================================================
+   43. RUNTIME CONTRACT COMPLETIONS
+   =========================================================
+   Additive only. Nothing above section 42 is modified.
+   These rules close the gap between the markup and the
+   contracts expected by public/script.js and
+   public/notion-articles.js.
+   ========================================================= */
+
+/* Inline SVG arrow icons need explicit sizing. The text-link
+   convention remains the U+2197 glyph, which is sized by its
+   own font, so both paths stay visually identical. */
+
+.arrow {
+    width: 15px;
+    height: 15px;
+}
+
+/* script.js marks the active theme choice with aria-pressed and
+   .is-selected (the stylesheet previously only knew
+   aria-checked, which nothing sets). */
+
+.theme-menu button[aria-pressed="true"] {
+    background: var(--strong);
+    color: var(--text);
+}
+
+/* script.js opens the mobile navigation with
+   `html.mobile-nav-open` and locks the page behind it, rather
+   than the previous `body.nav-open` pair. */
+
+html.mobile-nav-open {
+    overflow: hidden;
+}
+
+html.mobile-nav-open .mobile-nav {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+/* notion-articles.js renders the writing list as
+   .article-list > .article-row rather than a card grid, so the
+   .article-grid container has to collapse to a plain block. */
+
+.article-grid:has(.article-list) {
+    display: block;
+    border: 0;
+}
+
+.article-list {
+    display: block;
+    min-width: 0;
+    border-top: 1px solid var(--line2);
+}
+
+/* The footer cookie-settings control is a button, and the
+   stylesheet only styled `.footer-links a`. */
+
+.footer-links button {
+    padding: 8px 0;
+    border: 0;
+    background: none;
+    color: var(--muted);
+    font-size: 12px;
+    text-align: left;
+    transition: color var(--fast) ease;
+}
+
+.footer-links button:hover {
+    color: var(--accent);
+}
+
+/* Reveal contract used by script.js: `.reveal-ready` is applied
+   only when motion is allowed, `.is-visible` once in view. */
+
+.reveal-ready {
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+        opacity 700ms var(--ease),
+        transform 700ms var(--ease);
+}
+
+.reveal-ready.is-visible {
+    opacity: 1;
+    transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal-ready,
+    .reveal-ready.is-visible {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
